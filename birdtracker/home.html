@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bird Feeder Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+    }
+    header {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1e293b;
+      color: white;
+    }
+    #logo-area {
+      display: flex;
+      align-items: center;
+    }
+    #logo-area img {
+      height: 32px;
+      margin-right: 10px;
+    }
+    #signIn-btn {
+      background: #22c55e;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s ease;
+    }
+    #signIn-btn:hover { background: #16a34a; }
+    main { padding: 20px 40px; }
+    h2 { color: #334155; margin-top: 40px; }
+    .table-container { overflow-x: auto; margin-bottom: 30px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    table th, table td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+    table th { background: #e2e8f0; text-align: left; }
+    .notice {
+      padding: 15px; background: #fde047; border-left: 5px solid #facc15;
+      margin: 20px 0; border-radius: 4px; font-weight: bold; color: #7c2d12;
+    }
+    .filter-row { margin: 15px 0; display: flex; gap: 20px; flex-wrap: wrap; }
+    .filter-row label { font-weight: bold; }
+    .filter-row input, .filter-row select { padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 4px; }
+    .chart-box { margin: 40px 0; }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER BAR -->
+  <header>
+    <div id="logo-area">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Bird_silhouette.svg" alt="bird logo">
+      <strong>Bird Feeder Tracker</strong>
+    </div>
+
+    <div>
+      <button id="signIn-btn">Sign In</button>
+    </div>
+    <div>
+      <button id="signOut-btn">Log out</button>
+    </div>
+    <script type="module">
+
+    </script>
+  </header>
+
+  <main>
+    <h2>Welcome</h2>
+    <p>
+      Bird Feeder Tracker helps you monitor feeder activity, species diversity, peak visit times,  
+      and rare sightings. Log in to see your personalized dashboard with your feeder’s real data.
+    </p>
+
+    <!-- Sample Table -->
+    <div id="sample-data-section">
+      <h2>Sample Bird Activity</h2>
+      <div class="table-container">
+        <table>
+          <tr><th>Species</th><th>Sightings</th><th>Days Visited</th></tr>
+          <tr><td>Cardinal</td><td>34</td><td>12</td></tr>
+          <tr><td>Blue Jay</td><td>15</td><td>7</td></tr>
+          <tr><td>Goldfinch</td><td>9</td><td>4</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <h2>Your Bird Feeder Dashboard</h2>
+    <div id="dashboard-locked" class="notice">You must be logged in to see your bird tracking data.</div>
+
+    <div id="dashboard" style="display:none;">
+      <div class="filter-row">
+        <div>
+          <label>Start Date</label><br>
+          <input type="date" id="filter-start">
+        </div>
+        <div>
+          <label>End Date</label><br>
+          <input type="date" id="filter-end">
+        </div>
+        <div>
+          <label>Species Filter</label><br>
+          <select id="species-filter"><option value="">All species</option></select>
+        </div>
+      </div>
+
+      <h3>Bird Activity Summary</h3>
+      <div class="table-container">
+        <table id="bird-activity-table">
+          <tr><th>Species</th><th>Sightings</th><th>Days With Visits</th></tr>
+        </table>
+      </div>
+
+      <h3>Rare Species</h3>
+      <label>Show top: 
+        <select id="rare-limit" onchange="renderRareSpecies()">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+      </label>
+      <div class="table-container">
+        <table id="rare-table"><tr><th>Species</th><th>Rarity Score</th></tr></table>
+      </div>
+
+      <div class="chart-box"><h3>Visits Over Time</h3><canvas id="visitsOverTime"></canvas></div>
+      <div class="chart-box"><h3>Species Over Time</h3><canvas id="speciesOverTime"></canvas></div>
+      <div class="chart-box"><h3>Visits by Time of Day</h3><canvas id="visitsByTime"></canvas></div>
+      <div class="chart-box"><h3>Species by Time of Day</h3><canvas id="speciesByTime"></canvas></div>
+    </div>
+  </main>
+  <script type="module" src="js/config.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/oidc-client-ts@3.0.1/dist/browser/oidc-client-ts.min.js"></script>
+  <script defer src="js/lambda-call.js"></script>
+  <script defer src="js/dashboard.js"></script>
+  <script defer src="js/pkce-helper-funcs.js"></script>
+  <script type="module" src="js/signin.js"></script>
+</body>
+</html>
