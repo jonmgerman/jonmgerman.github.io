@@ -20,7 +20,7 @@ async function exchangeCodeForTokens(code) {
   const tokenUrl = "https://us-east-13wianfaoi.auth.us-east-1.amazoncognito.com/oauth2/token";
 
   // Retrieve the PKCE code_verifier that you generated before redirecting user to login
-  const codeVerifier = localStorage.getItem("pkce_code_verifier");
+  const codeVerifier = sessionStorage.getItem("pkce_code_verifier");
 
   if (!codeVerifier) {
     console.error("Missing PKCE code verifier. Cannot complete login.");
