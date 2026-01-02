@@ -33,7 +33,8 @@ const charts = {};
 async function fetchDashboardData() {
   try {
     // Fetch real API data
-    const res = await fetchBirdSightings(jwtToken = sessionStorage.getItem("access_token")); 
+    const jwtToken = sessionStorage.getItem("access_token");
+    const res = await fetchBirdSightings(jwtToken);
     //const requestData = await JSON.parse(res.body);
     
     const birdData = {
